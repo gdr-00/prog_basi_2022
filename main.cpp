@@ -7,7 +7,7 @@
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
 
-void fprint(PGresult *res, std::string nome, std::string path = "");
+void fprint(PGresult *res, const std::string& nome, const std::string& path = "");
 
 int main()
 {
@@ -70,12 +70,10 @@ void menu()
     switch(scelta){
         case 1: break; 
         case 2: break;
-    }
-
-    
+    }    
 }
 
-void fprint(PGresult *res, std::string nome, std::string path){
+void fprint(PGresult *res, const std::string& nome, const std::string& path){
     std::ofstream file (path+nome+".csv"); //definisci file stream dove mettere la stampa della query
     int tuple = PQntuples(res); //conta tuple
     int campi = PQnfields(res); //conta colonne
