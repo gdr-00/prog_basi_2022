@@ -6,6 +6,7 @@
 
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
+void fprint(PGresult *res, string nome, string path = "");
 
 int main()
 {
@@ -71,4 +72,26 @@ void menu()
     }
 
     
+}
+
+void fprint(PGresult *res, string nome, string path){
+    ofstream file (path+nome+".csv");
+    int tuple = PQntuples(res);
+    int campi = PQnfields(res);
+
+    for (int i = 0; i < campi; i++)
+    {
+        file << PQfname(res, i) << ",";
+    }
+    file << endl;
+    
+    for (int i = 0; i < tuple; i++)
+    {
+        for (int j = 0; j < campi; j++)
+        {
+            file << PQgetvalue(res, i, j) << ",";
+        }
+        file << endl;
+    }
+    file.close();
 }
