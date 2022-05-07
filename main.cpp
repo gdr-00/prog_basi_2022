@@ -3,10 +3,12 @@
 #include <iostream>
 //#include <libpq-fe.h>
 #include "dependencies/include/libpq-fe.h"
+#include <fstream>
 
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
-void fprint(PGresult *res, string nome, string path = "");
+
+void fprint(PGresult *res, std::string nome, std::string path = "");
 
 int main()
 {
@@ -74,8 +76,8 @@ void menu()
     
 }
 
-void fprint(PGresult *res, string nome, string path){
-    ofstream file (path+nome+".csv");
+void fprint(PGresult *res, std::string nome, std::string path){
+    std::ofstream file (path+nome+".csv");
     int tuple = PQntuples(res);
     int campi = PQnfields(res);
 
@@ -83,7 +85,7 @@ void fprint(PGresult *res, string nome, string path){
     {
         file << PQfname(res, i) << ",";
     }
-    file << endl;
+    file << std::endl;
     
     for (int i = 0; i < tuple; i++)
     {
@@ -91,7 +93,7 @@ void fprint(PGresult *res, string nome, string path){
         {
             file << PQgetvalue(res, i, j) << ",";
         }
-        file << endl;
+        file << std::endl;
     }
     file.close();
 }
