@@ -77,9 +77,9 @@ void menu()
 }
 
 void fprint(PGresult *res, std::string nome, std::string path){
-    std::ofstream file (path+nome+".csv");
-    int tuple = PQntuples(res);
-    int campi = PQnfields(res);
+    std::ofstream file (path+nome+".csv"); //definisci file stream dove mettere la stampa della query
+    int tuple = PQntuples(res); //conta tuple
+    int campi = PQnfields(res); //conta colonne
 
     for (int i = 0; i < campi; i++)
     {
