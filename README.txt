@@ -1,0 +1,1 @@
+Per avviare il programma, non avviare main.exe, ma eseguire OPEN.bat

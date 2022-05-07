@@ -1,0 +1,1 @@
+g++ main.cpp -L dependencies\lib -lpq -o main
