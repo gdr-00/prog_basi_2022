@@ -89,5 +89,13 @@ create table biglietto (
 );
 
 create table programmazione (
-
+    nome_film       varchar (100),
+    anno_uscita     date,
+    numero_sala     char(2),
+    nome_cinema     varchar(50),
+    citta_cinema    varchar(50),
+    orario          time not null,
+    primary key(orario, nome_film, anno_uscita, numero_sala, nome_cinema, citta_cinema),
+    foreign key(nome_film, anno_uscita) references film(nome_film,anno_uscita) on update cascade,
+    foreign key(nome_cinema,citta_cinema, numero_sala) references sala(nome_cinema,citta_cinema,numero_sala)
 );
