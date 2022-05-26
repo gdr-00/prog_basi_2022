@@ -100,18 +100,6 @@ create table programmazione (
     foreign key(nome_cinema,citta_cinema, numero_sala) references sala(nome_cinema,citta_cinema,numero_sala)
 );
 
-INSERT INTO ACCOUNT (email, password, cf, premium) VALUES
-('gian06@hotmail.it','Gj+2PhTc)8','BRGGLI78B51M130S',false),
-('paulina13@gmail.com','6i251ZU!$R','SLVGBL37D47H270I', true),
-('lucreziacorradi@live.com','61LtXtke_*','ZMNPTZ82H21B629G', true),
-('dligorio@hotmail.it','&RGwY^tc3z','RFFGTN98C65M260G', false),
-('boccionipietro@tiscali.it','Rm3Oxpvv3$','RGRLRT56L24M298J', true),
-('ipiccinni@outlook.com','485GDw^p%)','CGNVLT50T15G211Y', true),
-('paoloantonioni@yahoo.com','S1897BnS$(','FODMA09D54A347EX', true),
-('piergiorgio37@gmail.com','5L!5iDy4RT','PRTRSN78H13L359O', false),
-('mazzacuratimarcantonio@tele2.it','UB$$2gFeew','BRCGNE08M11M180X', true),
-('qnonis@vodafone.it','!GRjf6e60#','LPPGLR37D07B883S', false);
-
 INSERT INTO persona (CF, nome, cognome, sesso, data_nascita, numero_telefono) VALUES
 ('BRGGLI78B51M130S','Ludovica','Argurio','F','1974-03-21','+39 0341993996'),
 ('SLVGBL37D47H270I','Ornella','Sforza','F','1978-08-11','+39 3770587292'),
@@ -123,3 +111,15 @@ INSERT INTO persona (CF, nome, cognome, sesso, data_nascita, numero_telefono) VA
 ('LPPGLR37D07B883S','Carolina','Broggini','F','1999-07-29','+39 0574263625'),
 ('PRTRSN78H13L359O','Nicola','Zampa','F','2018-12-20','0736377506'),
 ('BRCGNE08M11M180X','Martina','Boezio','F','2009-06-09','+39 05746151177');
+
+INSERT INTO ACCOUNT (email, password, cf, premium) VALUES
+('gian06@hotmail.it','Gj+2PhTc)8','BRGGLI78B51M130S',false),
+('paulina13@gmail.com','6i251ZU!$R','SLVGBL37D47H270I', true),
+('lucreziacorradi@live.com','61LtXtke_*','ZMNPTZ82H21B629G', true),
+('dligorio@hotmail.it','&RGwY^tc3z','RFFGTN98C65M260G', false),
+('boccionipietro@tiscali.it','Rm3Oxpvv3$','RGRLRT56L24M298J', true),
+('ipiccinni@outlook.com','485GDw^p%)','CGNVLT50T15G211Y', true),
+('paoloantonioni@yahoo.com','S1897BnS$(','FODMA09D54A347EX', true),
+('piergiorgio37@gmail.com','5L!5iDy4RT','PRTRSN78H13L359O', false),
+('mazzacuratimarcantonio@tele2.it','UB$$2gFeew','BRCGNE08M11M180X', true),
+('qnonis@vodafone.it','!GRjf6e60#','LPPGLR37D07B883S', false);
