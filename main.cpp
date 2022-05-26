@@ -1,18 +1,17 @@
 //TODO: vedere perche' senza .bat il file .exe non rimane aperto
 //      implementare il menu' e metterlo nel main  
 #include <iostream>
-//#include <libpq-fe.h>
 #include "dependencies/include/libpq-fe.h"
 #include <fstream>
 
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
 
-void fprint(PGresult *res, std::string nome, std::string path = "");
+void fprint(PGresult *res, const std::string& nome, const std::string& path = "");
 
 int main()
 {
-    const std::string NOME_DB = "dbname=lab3"; //XD
+    const std::string NOME_DB = "dbname=lab3"; 
     const std::string USER = "user=postgres";
     const std::string PASSWORD = "password=2000";
     const std::string blank = " ";                                                                          //i vari parimetri per la connessione devono essere separati da un black space
@@ -71,12 +70,10 @@ void menu()
     switch(scelta){
         case 1: break; 
         case 2: break;
-    }
-
-    
+    }    
 }
 
-void fprint(PGresult *res, std::string nome, std::string path){
+void fprint(PGresult *res, const std::string& nome, const std::string& path){
     std::ofstream file (path+nome+".csv"); //definisci file stream dove mettere la stampa della query
     int tuple = PQntuples(res); //conta tuple
     int campi = PQnfields(res); //conta colonne
