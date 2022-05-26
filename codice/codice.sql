@@ -1,0 +1,93 @@
+drop table if exists film;
+drop table if exists cinema;
+drop table if exists sala;
+drop table if exists recensione_sala;
+drop table if exists recensione_film;
+drop table if exists account;
+drop table if exists persona;
+drop table if exists biglietto;
+drop table if exists programmazione;
+
+create table film (
+    nome_film           varchar (100),
+    anno_uscita         date,
+    durata              time    not null,
+    valutazione_media   numeric(2,1),
+    primary key(nome_film, anno_uscita)
+);
+
+create table cinema (
+    nome            varchar(50),
+    citta           varchar(50),
+    incassi totali  varchar(100),
+    via             varchar(50) not null,
+    numero          char(5)     not null,
+    cap             char(5)     not null,
+    stato           varchar(30) not null,
+    primary key(nome, citta)
+);
+
+create table sala (
+    numero_sala         char(2),
+    nome_cinema         varchar(50),
+    citta_cinema        varchar(50),
+    posti_massimi       varchar(10),
+    prezzo              money,
+    valutazione_media   numeric(3,1),
+    primary key(numero_sala,nome_cinema,citta_cinema),
+    foreign key(nome_cinema, citta_cinema) references cinema(nome, citta) on update cascade on delete cascade
+);
+
+create table persona (
+    CF              char(16) primary key,
+    nome            varchar(50),
+    cognome         varchar(50),
+    sesso           char(2),
+    data_nascita    date,
+    numero_telefono varchar(15),
+);
+
+create table account (
+    email       varchar(50) primary key,
+    password    varchar(50),
+    cf          char(16),
+    premium     boolean,
+    foreign key(cf) references persona(cf) on update cascade on delete TODO,
+);
+
+create table recensione_sala (
+    data            timestamp,
+    email           varchar(50) default utente_eliminato,
+    commento        varchar(500),
+    valutazione     numeric(1),
+    primary key(data, email),
+    foreign key(email) references account(email) on update cascade on delete set default
+);
+
+create table recensione_film (
+    data            timestamp,
+    email           varchar(50) default utente_eliminato,
+    commento        varchar(500),
+    valutazione     numeric(1),
+    primary key(data, email),
+    foreign key(email) references account(email) on update cascade on delete set default
+);
+
+create table biglietto (
+    biglietto_id    bigserial   primary key,
+    data_acquisto   timestamp   not null,
+    nome_film       varchar(50) not null,
+    anno_uscita     data        not null,
+    numero_sala     char(2),
+    nome_cinema     varchar(50),
+    citta_cinema    varchar(50),
+    email           varchar(50),
+    posto           smallint    not null,
+    foreign key(nome_film,anno_uscita) references film(nome_film, anno_uscita) on update cascade,
+    foreign key(numero_sala,nome_cinema,citta_cinema) references sala(numero_sala, nome_cinema, citta_cinema) on update cascade on delete set null,
+    foreign key(email) references account(email) on update cascade on delete set null,
+);
+
+create table programmazione (
+
+);
