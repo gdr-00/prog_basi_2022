@@ -1,12 +1,12 @@
-drop table if exists film;
-drop table if exists cinema;
-drop table if exists sala;
 drop table if exists recensione_sala;
 drop table if exists recensione_film;
-drop table if exists account;
-drop table if exists persona;
 drop table if exists biglietto;
+drop table if exists account;
 drop table if exists programmazione;
+drop table if exists persona;
+drop table if exists sala;
+drop table if exists cinema;
+drop table if exists film;
 
 create table film (
     nome_film           varchar (100),
