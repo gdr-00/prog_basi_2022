@@ -19,7 +19,7 @@ create table film (
 create table cinema (
     nome            varchar(50),
     citta           varchar(50),
-    incassi totali  varchar(100),
+    incassi_totali  varchar(100),
     via             varchar(50) not null,
     numero          char(5)     not null,
     cap             char(5)     not null,
@@ -44,7 +44,7 @@ create table persona (
     cognome         varchar(50),
     sesso           char(2),
     data_nascita    date,
-    numero_telefono varchar(15),
+    numero_telefono varchar(15)
 );
 
 create table account (
@@ -52,12 +52,12 @@ create table account (
     password    varchar(50),
     cf          char(16),
     premium     boolean,
-    foreign key(cf) references persona(cf) on update cascade on delete TODO,
+    foreign key(cf) references persona(cf) on update cascade
 );
 
 create table recensione_sala (
     data            timestamp,
-    email           varchar(50) default utente_eliminato,
+    email           varchar(50) default 'utente_eliminato',
     commento        varchar(500),
     valutazione     numeric(1),
     primary key(data, email),
@@ -66,7 +66,7 @@ create table recensione_sala (
 
 create table recensione_film (
     data            timestamp,
-    email           varchar(50) default utente_eliminato,
+    email           varchar(50) default 'utente_eliminato',
     commento        varchar(500),
     valutazione     numeric(1),
     primary key(data, email),
@@ -77,7 +77,7 @@ create table biglietto (
     biglietto_id    bigserial   primary key,
     data_acquisto   timestamp   not null,
     nome_film       varchar(50) not null,
-    anno_uscita     data        not null,
+    anno_uscita     date        not null,
     numero_sala     char(2),
     nome_cinema     varchar(50),
     citta_cinema    varchar(50),
@@ -85,7 +85,7 @@ create table biglietto (
     posto           smallint    not null,
     foreign key(nome_film,anno_uscita) references film(nome_film, anno_uscita) on update cascade,
     foreign key(numero_sala,nome_cinema,citta_cinema) references sala(numero_sala, nome_cinema, citta_cinema) on update cascade on delete set null,
-    foreign key(email) references account(email) on update cascade on delete set null,
+    foreign key(email) references account(email) on update cascade on delete set null
 );
 
 create table programmazione (
