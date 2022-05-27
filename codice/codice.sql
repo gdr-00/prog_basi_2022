@@ -12,7 +12,7 @@ create table film (
     nome_film           varchar (100),
     anno_uscita         date,
     durata              time    not null,
-    valutazione_media   numeric(2,1),
+    valutazione_media   numeric(2,1) check(valutazione_media>=0) default null,
     primary key(nome_film, anno_uscita)
 );
 
@@ -33,7 +33,7 @@ create table sala (
     citta_cinema        varchar(50),
     posti_massimi       varchar(10),
     prezzo              money,
-    valutazione_media   numeric(3,1),
+    valutazione_media   numeric(2,1) check(valutazione_media>=0) default null,
     primary key(numero_sala,nome_cinema,citta_cinema),
     foreign key(nome_cinema, citta_cinema) references cinema(nome, citta) on update cascade on delete cascade
 );
