@@ -8,12 +8,13 @@
 #include <vector>
 
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
-void menu();
+void menu(const char* connInfo);
 
 void fprint(PGresult *res, const std::string& nome_file, const std::string& path = "");
 PGresult* execute(PGconn* conn, const char* query);
 void printSeparator(int campi, int* maxChar);
 void printQuery(PGresult* res);
+std::string queryReader(const std::string& path, const std::string& nome_file);
 
 int main()
 {
@@ -32,7 +33,7 @@ int main()
         abort(conn);
     }
 
-    std::vector<const char*> query;
+    
 
 }
 
@@ -48,20 +49,44 @@ void abort(PGconn* conn , PGresult* res ){
 }
 
 
-void menu()
+void menu(const char* connInfo)
 {
     std::cout<<"/t MENU /n";
-    std::cout<<" 1 - query 1 /n";
-    std::cout<<" 2 - query 1 /n";
+    std::cout<<" 1 - reset tabelle 1 /n";
+    std::cout<<" 2 - insert dati nelle tabelle 1 /n";
 
     int scelta;
     std::cin>>scelta;
 
     //TODO:da fare tutte le funzioni per l'esecuzione delle query
     switch(scelta){
-        case 1: break; 
-        case 2: break;
-    }    
+        case 1:
+            {
+                PGconn* conn = PQconnectdb(connInfo);//connettiti al db
+                if (PQstatus(conn) == CONNECTION_BAD){
+                    std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);   //verifica la connessione
+                    abort(conn);
+                }
+                std::string s = queryReader("", "create_tables");                           //copia la query da file
+                const char* query = s.c_str();
+                PGresult* res = execute(conn,query);                                        //esegue query
+                abort(conn , res);
+            }
+            break; 
+        case 2:
+            {
+                PGconn* conn = PQconnectdb(connInfo);
+                if (PQstatus(conn) == CONNECTION_BAD){
+                    std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
+                    abort(conn);
+                }
+                std::string s = queryReader("", "insert_tuples");
+                const char* query = s.c_str();
+                PGresult* res = execute(conn,query);
+                abort(conn , res);
+            }
+            break;
+    }
 }
 
 PGresult* execute(PGconn* conn, const char* query) {
@@ -76,20 +101,17 @@ PGresult* execute(PGconn* conn, const char* query) {
 }
 
 void fprint(PGresult *res, const std::string& nome_file, const std::string& path){
-    std::ofstream file (path+nome_file+".csv"); //definisci file stream dove mettere la stampa della query
-    int tuple = PQntuples(res); //conta tuple
-    int campi = PQnfields(res); //conta colonne
+    std::ofstream file (path+nome_file+".csv");     //definisci file stream dove mettere la stampa della query
+    int tuple = PQntuples(res);                     //conta tuple
+    int campi = PQnfields(res);                     //conta colonne
 
-    for (int i = 0; i < campi; i++)
-    {
+    for (int i = 0; i < campi; i++){
         file << PQfname(res, i) << ",";
     }
     file << std::endl;
     
-    for (int i = 0; i < tuple; i++)
-    {
-        for (int j = 0; j < campi; j++)
-        {
+    for (int i = 0; i < tuple; i++){
+        for (int j = 0; j < campi; j++){
             file << PQgetvalue(res, i, j) << ",";
         }
         file << std::endl;
@@ -108,7 +130,7 @@ void printSeparator(int campi, int* maxChar) {
 
 void printQuery(PGresult* res) {
     // Preparazione dati
-    const int tuple = PQntuples(res), campi = PQnfields(res);
+    int tuple = PQntuples(res), campi = PQnfields(res);
     std::string v[tuple + 1][campi];
 
     for (int i = 0; i < campi; ++i) {
@@ -164,11 +186,14 @@ void printQuery(PGresult* res) {
     printSeparator(campi, maxChar);
 }
 
-void queryReader(const std::string& path, const std::string& nome_file, std::vector<const char*>& query){
+std::string queryReader(const std::string& path, const std::string& nome_file){
     std::ifstream file(path+nome_file+".sql");
-    std::string s;
-    while(std::getline(file, s, ';')){
-        s.append(1, ';');
-        query.push_back(s.c_str());
+    std::string s = "";
+    while (!file.eof()){
+        std::string line;
+        std::getline(file,  line);
+        s.append(line);
     }
+    file.close();
+    return s;
 }
