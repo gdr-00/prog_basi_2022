@@ -8,6 +8,9 @@ void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
 
 void fprint(PGresult *res, const std::string& nome_file, const std::string& path = "");
+PGresult* execute(PGconn* conn, const char* query);
+void printSeparator(int campi, int* maxChar);
+void printQuery(PGresult* res);
 
 int main()
 {
@@ -16,32 +19,15 @@ int main()
     const std::string PASSWORD = "password=basi2022";
     const std::string blank = " ";                                                                          //i vari parimetri per la connessione devono essere separati da un black space
 
-//TODO:vedere se si puo' rimuovere la funzione s.data() e buttare tutto dentro come stringa
-
     std::string s = NOME_DB + blank + USER + blank + PASSWORD;
     const char* t = s.data();                                                                                // string ---> char* 
     
-//TODO: fare la funzione per connettersi    
     PGconn* conn = PQconnectdb(t);                                                                          // connessione al db
 
     if (PQstatus(conn) == CONNECTION_BAD){                                                                  // controllo che tutto sia andato bene
         std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
         abort(conn);
     }
-
-//TODO: fare una funzione per eseguire le query
-    PGresult* res = PQexec(conn, "SELECT * FROM hubs");                                                     //esegui la query
-
-    if(PQresultStatus(res) != PGRES_TUPLES_OK){
-        std::cerr << "Non e' stato restituito un risultato" << PQerrorMessage(conn);                        // controllo che non ci siano stati errori
-        abort(conn);
-    }
-//FIXME: FATTA SOLO PER VEDERE CHE FUNZONA -----> SPOILER: FUNZIONA LMAO
-    for (int i = 0 ; i < 10 ; ++i)
-        std::cout<< PQgetvalue(res,i,0) << std::endl;
-
-    abort(conn,res);
-    return 0;
 
 }
 
@@ -106,7 +92,7 @@ void fprint(PGresult *res, const std::string& nome_file, const std::string& path
     file.close();
 }
 
-void printLine(int campi, int* maxChar) {
+void printSeparator(int campi, int* maxChar) {
     for (int j = 0; j < campi; ++j) {
         std::cout << '+';
         for (int k = 0; k < maxChar[j] + 2; ++k)
@@ -147,7 +133,7 @@ void printQuery(PGresult* res) {
     }
 
     // Stampa effettiva delle tuple
-    printLine(campi, maxChar);
+    printSeparator(campi, maxChar);
     for (int j = 0; j < campi; ++j) {
         std::cout << "| ";
         std::cout << v[0][j];
@@ -157,7 +143,7 @@ void printQuery(PGresult* res) {
             std::cout << "|";
     }
     std::cout << std::endl;
-    printLine(campi, maxChar);
+    printSeparator(campi, maxChar);
 
     for (int i = 1; i < tuple + 1; ++i) {
         for (int j = 0; j < campi; ++j) {
@@ -170,5 +156,5 @@ void printQuery(PGresult* res) {
         }
         std::cout << std::endl;
     }
-    printLine(campi, maxChar);
+    printSeparator(campi, maxChar);
 }

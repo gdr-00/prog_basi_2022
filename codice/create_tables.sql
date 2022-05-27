@@ -57,19 +57,26 @@ create table account (
 create table recensione_sala (
     data            timestamp,
     email           varchar(50) default 'utente_eliminato',
+    numero_sala     char(2),
+    nome_cinema     varchar(50),
+    citta_cinema    varchar(50),
     commento        varchar(500) default null,
     valutazione     numeric(1) check(valutazione>=0) not null,
     primary key(data, email),
-    foreign key(email) references account(email) on update cascade on delete set default
+    foreign key(email) references account(email) on update cascade on delete set default,
+    foreign key(numero_sala,nome_cinema,citta_cinema) references sala(numero_sala,nome_cinema,citta_cinema) on update cascade on delete cascade
 );
 
 create table recensione_film (
     data            timestamp,
     email           varchar(50) default 'utente_eliminato',
+    nome_film       varchar (100),
+    anno_uscita     date,
     commento        varchar(500) default null,
     valutazione     numeric(1) check(valutazione>=0) not null,
     primary key(data, email),
-    foreign key(email) references account(email) on update cascade on delete set default
+    foreign key(email) references account(email) on update cascade on delete set default,
+    foreign key(nome_film,anno_uscita) references film(nome_film,anno_uscita) on update cascade
 );
 
 create table biglietto (
