@@ -19,7 +19,6 @@ create table film (
 create table cinema (
     nome            varchar(50),
     citta           varchar(50),
-    incassi_totali  varchar(100),
     via             varchar(50) not null,
     numero          char(5)     not null,
     cap             char(5)     not null,

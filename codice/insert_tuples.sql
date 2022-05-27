@@ -36,3 +36,15 @@ INSERT INTO film(nome_film,anno_uscita,durata) VALUES
 ('Morbius','2022-01-11','1:44:00'),
 ('Old','2021-04-30','1:44:00'),
 ('Doctor Strange','2016-09-22','1:44:00');
+
+INSERT INTO cinema(nome,citta,via,numero,cap,stato) VALUES
+('Cinema1','Citta1','Via A','1','11111','Italia'),
+('Cinema2','Citta2','Via B','2','22222','Italia'),
+('Cinema3','Citta3','Via C','3','33333','Italia'),
+('Cinema4','Citta4','Via D','4','44444','Italia'),
+('Cinema5','Citta5','Via E','5','55555','Italia'),
+('Cinema6','Citta6','Via F','6','66666','Italia'),
+('Cinema7','Citta7','Via G','7','77777','Italia'),
+('Cinema8','Citta8','Via H','8','88888','Italia'),
+('Cinema9','Citta9','Via I','9','99999','Italia'),
+('Cinema10','Citta10','Via J','10','10101','Italia');
