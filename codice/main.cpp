@@ -3,6 +3,9 @@
 #include <iostream>
 #include "dependencies/include/libpq-fe.h"
 #include <fstream>
+#include <string>
+#include <cstring>
+#include <vector>
 
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu();
@@ -28,6 +31,8 @@ int main()
         std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
         abort(conn);
     }
+
+    std::vector<const char*> query;
 
 }
 
@@ -157,4 +162,13 @@ void printQuery(PGresult* res) {
         std::cout << std::endl;
     }
     printSeparator(campi, maxChar);
+}
+
+void queryReader(const std::string& path, const std::string& nome_file, std::vector<const char*>& query){
+    std::ifstream file(path+nome_file+".sql");
+    std::string s;
+    while(std::getline(file, s, ';')){
+        s.append(1, ';');
+        query.push_back(s.c_str());
+    }
 }

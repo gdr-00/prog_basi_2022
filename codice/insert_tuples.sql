@@ -48,3 +48,14 @@ INSERT INTO cinema(nome,citta,via,numero,cap,stato) VALUES
 ('Cinema8','Citta8','Via H','8','88888','Italia'),
 ('Cinema9','Citta9','Via I','9','99999','Italia'),
 ('Cinema10','Citta10','Via J','10','10101','Italia');
+
+INSERT INTO recensione_film(data, email, commento, valutazione,nome_film, anno_uscita) VALUES
+('2022-11-23','paulina13@gmail.com','Explicabo commodi earum aliquid. Debitis deleniti perferendis nisi.','3','Avengers Assemble','2012-03-01'),
+('2022-09-18', 'paulina13@gmail.com', 'Illo aliquam deleniti minima dicta.','5','Old','2021-04-30'),
+('2022-09-14','paulina13@gmail.com','Aliquam ea optio eius porro. Ea voluptas aspernatur. Eveniet quae a.','5','Avengers: Endgame','2019-06-06'),
+('2022-02-24','lucreziacorradi@live.com','Iste facilis fugiat esse perferendis illo. Dolores pariatur inventore dolore suscipit.','4','Avengers Assemble','2012-03-01'),
+('2022-07-18','boccionipietro@tiscali.it','Nihil reprehenderit temporibus facere. Nulla dolore consectetur vero earum.','9','Avengers Assemble','2012-03-01'),
+('2022-05-14','mazzacuratimarcantonio@tele2.it','Voluptas nisi quo minima quidem amet optio fugit. Asperiores eum adipisci modi voluptatem eum.','4','Avengers Assemble','2012-03-01'),
+('2022-11-18','ipiccinni@outlook.com','Magnam assumenda possimus ducimus esse et. Nisi quia iusto recusandae nulla tempora ab.','5','Avengers Assemble','2012-03-01'),
+('2022-12-06','ipiccinni@outlook.com','Culpa odio veniam saepe. Aperiam vel accusantium adipisci non quaerat.','4','Old','2021-04-30'),
+('2022-05-07','ipiccinni@outlook.com','Dolores eligendi voluptate incidunt doloremque. Vitae quam nostrum ut quisquam.','6','Avengers: Endgame','2019-06-06');
