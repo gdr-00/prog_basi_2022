@@ -1,5 +1,3 @@
-//perche' senza .bat il file .exe non rimane aperto? è un eseguibile senza gui quindi esegue il programma e una volta finito chiude la shell
-//implementare il menu' e metterlo nel main  
 #include <iostream>
 #include "dependencies/include/libpq-fe.h"
 #include <fstream>
@@ -53,13 +51,12 @@ char menu(const char* connInfo){
     std::cout<<"\n\t MENU \n";
     std::cout<<"1) Reset tabelle 1 \n";
     std::cout<<"2) Insert dati nelle tabelle 1 \n";
-    std::cout<<"3)  \n";
-    std::cout<<"4)  \n";
-    std::cout<<"5)  \n";
-    std::cout<<"6)  \n";
-    std::cout<<"7)  \n";
-    std::cout<<"8)  \n";
-    std::cout<<"9)  \n";
+    std::cout<<"3) Mostra il numero di biglietti comptati da una persona mostrando nome cognome e cf ed evidenzia se puo fare o meno recensioni \n";
+    std::cout<<"4) Tutti i cinema con incassi totali maggiori di 100$ \n";
+    std::cout<<"5) Trovare tutte le persone che si sono sedute sullo stesso posto \n";
+    std::cout<<"6) Esegui query 4 \n";
+    std::cout<<"7) Esegui query 5 \n";
+    std::cout<<"8) Esegui query 6 \n";
     char scelta;
     std::cin>>scelta;
 
@@ -67,18 +64,62 @@ char menu(const char* connInfo){
         case '1':
             {
                 PGconn* conn = connect(connInfo);
-                std::string s = queryReader("", "create_tables");                           //copia la query da file
-                const char* query = s.c_str();
-                PGresult* res = execute(conn,query);                                        //esegue query
+                PGresult* res = execute(conn,queryReader("", "create_tables").c_str());
                 abort(conn , res);
             }
             break; 
         case '2':
             {
                 PGconn* conn = connect(connInfo);
-                std::string s = queryReader("", "insert_tuples");
-                const char* query = s.c_str();
-                PGresult* res = execute(conn,query);
+                PGresult* res = execute(conn,queryReader("", "insert_tuples").c_str());
+                abort(conn , res);
+            }
+            break;
+        case '3':
+            {
+                PGconn* conn = connect(connInfo);
+                std::cout << queryReader("", "query1");
+                PGresult* res = execute(conn,queryReader("", "query1").c_str());
+                printQuery(res);
+                abort(conn , res);
+            }
+            break; 
+        case '4':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query2").c_str());
+                printQuery(res);
+                abort(conn , res);
+            }
+            break;
+        case '5':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query3").c_str());
+                printQuery(res);
+                abort(conn , res);
+            }
+            break; 
+        case '6':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query4").c_str());
+                abort(conn , res);
+            }
+            break;
+        case '7':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query5").c_str());
+                printQuery(res);
+                abort(conn , res);
+            }
+            break; 
+        case '8':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query6").c_str());
+                printQuery(res);
                 abort(conn , res);
             }
             break;
