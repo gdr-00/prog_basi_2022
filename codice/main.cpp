@@ -7,6 +7,7 @@
 #include <cstring>
 #include <vector>
 
+PGconn* connect(const char* connInfo);
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
 void menu(const char* connInfo);
 
@@ -24,17 +25,17 @@ int main()
     const std::string blank = " ";                                                                          //i vari parimetri per la connessione devono essere separati da un black space
 
     std::string s = NOME_DB + blank + USER + blank + PASSWORD;
-    const char* t = s.data();                                                                                // string ---> char* 
+    const char* connInfo = s.c_str();                                                                       // string ---> char* 
     
+    /*
     PGconn* conn = PQconnectdb(t);                                                                          // connessione al db
 
     if (PQstatus(conn) == CONNECTION_BAD){                                                                  // controllo che tutto sia andato bene
         std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
         abort(conn);
-    }
+    }*/
 
-    
-
+    menu(connInfo);
 }
 
 void abort(PGconn* conn , PGresult* res ){
@@ -62,11 +63,7 @@ void menu(const char* connInfo)
     switch(scelta){
         case 1:
             {
-                PGconn* conn = PQconnectdb(connInfo);//connettiti al db
-                if (PQstatus(conn) == CONNECTION_BAD){
-                    std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);   //verifica la connessione
-                    abort(conn);
-                }
+                PGconn* conn = connect(connInfo);
                 std::string s = queryReader("", "create_tables");                           //copia la query da file
                 const char* query = s.c_str();
                 PGresult* res = execute(conn,query);                                        //esegue query
@@ -75,11 +72,7 @@ void menu(const char* connInfo)
             break; 
         case 2:
             {
-                PGconn* conn = PQconnectdb(connInfo);
-                if (PQstatus(conn) == CONNECTION_BAD){
-                    std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
-                    abort(conn);
-                }
+                PGconn* conn = connect(connInfo);
                 std::string s = queryReader("", "insert_tuples");
                 const char* query = s.c_str();
                 PGresult* res = execute(conn,query);
@@ -89,7 +82,17 @@ void menu(const char* connInfo)
     }
 }
 
+PGconn* connect(const char* connInfo){
+    PGconn* conn = PQconnectdb(connInfo);//connettiti al db
+        if (PQstatus(conn) == CONNECTION_BAD){
+            std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);   //verifica la connessione
+             abort(conn);
+        }
+    return conn;
+}
+
 PGresult* execute(PGconn* conn, const char* query) {
+
     PGresult* res = PQexec(conn, query);
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
         std::cout << " Risultati inconsistenti!" << PQerrorMessage(conn) << std::endl;

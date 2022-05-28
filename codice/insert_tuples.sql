@@ -223,3 +223,13 @@ INSERT INTO biglietto(data_acquisto,nome_film,anno_uscita,numero_sala,nome_cinem
 ('2021-4-23','Avengers: Endgame','2019-06-06','2','Cinema4','Citta4','paulina13@gmail.com','44'),
 ('2021-4-23','Avengers: Endgame','2019-06-06','2','Cinema4','Citta4','ipiccinni@outlook.com','45');
 
+INSERT INTO recensione_sala(data, email, numero_sala, nome_cinema, citta_cinema,commento,valutazione) VALUES
+('2021-11-23','paulina13@gmail.com','1 ','Cinema1','Citta1','Carina','7'),
+('2021-11-23','lucreziacorradi@live.com','1 ','Cinema1','Citta1','No','3'),
+('2021-11-23','boccionipietro@tiscali.it','1 ','Cinema1','Citta1','No','2'),
+('2021-11-23','mazzacuratimarcantonio@tele2.it','1 ','Cinema1','Citta1','Ci sta','9'),
+('2021-11-23','ipiccinni@outlook.com','1 ','Cinema1','Citta1','Bella','8'),
+('2020-06-23','paulina13@gmail.com','1 ','Cinema2','Citta2','Carina','7'),
+('2020-06-23','ipiccinni@outlook.com','1 ','Cinema2','Citta2','Carina','6'),
+('2021-04-23','paulina13@gmail.com','2 ','Cinema4','Citta4','No','5'),
+('2021-04-23','ipiccinni@outlook.com','2 ','Cinema4','Citta4','Bha','4');
