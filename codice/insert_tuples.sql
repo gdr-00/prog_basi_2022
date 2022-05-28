@@ -222,3 +222,4 @@ INSERT INTO biglietto(data_acquisto,nome_film,anno_uscita,numero_sala,nome_cinem
 ('2020-6-23','Old','2021-04-30','1','Cinema2','Citta2','ipiccinni@outlook.com','49'),
 ('2021-4-23','Avengers: Endgame','2019-06-06','2','Cinema4','Citta4','paulina13@gmail.com','44'),
 ('2021-4-23','Avengers: Endgame','2019-06-06','2','Cinema4','Citta4','ipiccinni@outlook.com','45');
+
