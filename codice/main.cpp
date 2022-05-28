@@ -27,19 +27,12 @@ int main()
     const std::string PORT = "port=5432";
     const std::string blank = " ";                                                                          //i vari parimetri per la connessione devono essere separati da un black space
     
-    std::cout << "Type q to quit\n";
+    std::cout << "Premi q per terminare il programma\n";
 
     std::string s = USER + blank + PASSWORD + blank + NOME_DB + blank + HOST;
     const char* connInfo = s.c_str();                                                                       // string ---> char* 
     
-    /*
-    PGconn* conn = PQconnectdb(t);                                                                          // connessione al db
-
-    if (PQstatus(conn) == CONNECTION_BAD){                                                                  // controllo che tutto sia andato bene
-        std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
-        abort(conn);
-    }*/
-    char scelta = '2';
+    char scelta = '0';
     while(scelta != 'q'){
          scelta = menu(connInfo);
     }
@@ -58,8 +51,15 @@ void abort(PGconn* conn , PGresult* res ){
 
 char menu(const char* connInfo){
     std::cout<<"\n\t MENU \n";
-    std::cout<<"1) reset tabelle 1 \n";
-    std::cout<<"2) insert dati nelle tabelle 1 \n";
+    std::cout<<"1) Reset tabelle 1 \n";
+    std::cout<<"2) Insert dati nelle tabelle 1 \n";
+    std::cout<<"3)  \n";
+    std::cout<<"4)  \n";
+    std::cout<<"5)  \n";
+    std::cout<<"6)  \n";
+    std::cout<<"7)  \n";
+    std::cout<<"8)  \n";
+    std::cout<<"9)  \n";
     char scelta;
     std::cin>>scelta;
 
