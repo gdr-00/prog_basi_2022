@@ -32,6 +32,7 @@ create table sala (
     citta_cinema        varchar(50),
     posti_massimi       varchar(10),
     prezzo              money,
+    tipo_sala           varchar(10),
     valutazione_media   numeric(2,1) check(valutazione_media>=0) default null,
     primary key(numero_sala,nome_cinema,citta_cinema),
     foreign key(nome_cinema, citta_cinema) references cinema(nome, citta) on update cascade on delete cascade
