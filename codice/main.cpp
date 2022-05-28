@@ -6,10 +6,11 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <Windows.h>
 
 PGconn* connect(const char* connInfo);
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
-void menu(const char* connInfo);
+char menu(const char* connInfo);
 
 void fprint(PGresult *res, const std::string& nome_file, const std::string& path = "");
 PGresult* execute(PGconn* conn, const char* query);
@@ -19,12 +20,16 @@ std::string queryReader(const std::string& path, const std::string& nome_file);
 
 int main()
 {
-    const std::string NOME_DB = "dbname=cineplace+"; 
     const std::string USER = "user=postgres";
     const std::string PASSWORD = "password=basi2022";
+    const std::string NOME_DB = "dbname=cineplace+";
+    const std::string HOST = "host=192.168.1.210";
+    const std::string PORT = "port=5432";
     const std::string blank = " ";                                                                          //i vari parimetri per la connessione devono essere separati da un black space
+    
+    std::cout << "Type q to quit\n";
 
-    std::string s = NOME_DB + blank + USER + blank + PASSWORD;
+    std::string s = USER + blank + PASSWORD + blank + NOME_DB + blank + HOST;
     const char* connInfo = s.c_str();                                                                       // string ---> char* 
     
     /*
@@ -34,8 +39,11 @@ int main()
         std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);
         abort(conn);
     }*/
-
-    menu(connInfo);
+    char scelta = '2';
+    while(scelta != 'q'){
+         scelta = menu(connInfo);
+    }
+    return 0;
 }
 
 void abort(PGconn* conn , PGresult* res ){
@@ -45,23 +53,18 @@ void abort(PGconn* conn , PGresult* res ){
 
     if (conn != nullptr)
         PQfinish(conn);
-
-    exit(1);
 }
 
 
-void menu(const char* connInfo)
-{
-    std::cout<<"/t MENU /n";
-    std::cout<<" 1 - reset tabelle 1 /n";
-    std::cout<<" 2 - insert dati nelle tabelle 1 /n";
-
-    int scelta;
+char menu(const char* connInfo){
+    std::cout<<"\n\t MENU \n";
+    std::cout<<"1) reset tabelle 1 \n";
+    std::cout<<"2) insert dati nelle tabelle 1 \n";
+    char scelta;
     std::cin>>scelta;
 
-    //TODO:da fare tutte le funzioni per l'esecuzione delle query
     switch(scelta){
-        case 1:
+        case '1':
             {
                 PGconn* conn = connect(connInfo);
                 std::string s = queryReader("", "create_tables");                           //copia la query da file
@@ -70,7 +73,7 @@ void menu(const char* connInfo)
                 abort(conn , res);
             }
             break; 
-        case 2:
+        case '2':
             {
                 PGconn* conn = connect(connInfo);
                 std::string s = queryReader("", "insert_tuples");
@@ -79,14 +82,21 @@ void menu(const char* connInfo)
                 abort(conn , res);
             }
             break;
-    }
+        case 'q':
+            std::cout << "quitting" << std::endl;
+            break;
+        default:
+            std::cout << "Input Invalido" << std::endl;
+            break;
+        }
+    return scelta;
 }
 
 PGconn* connect(const char* connInfo){
     PGconn* conn = PQconnectdb(connInfo);//connettiti al db
         if (PQstatus(conn) == CONNECTION_BAD){
             std::cerr <<"Connection to database failed:" << PQerrorMessage(conn);   //verifica la connessione
-             abort(conn);
+            abort(conn);
         }
     return conn;
 }
@@ -94,10 +104,54 @@ PGconn* connect(const char* connInfo){
 PGresult* execute(PGconn* conn, const char* query) {
 
     PGresult* res = PQexec(conn, query);
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        std::cout << " Risultati inconsistenti!" << PQerrorMessage(conn) << std::endl;
-        PQclear(res);
-        exit(1);
+    ExecStatusType status = PQresultStatus(res);
+    switch(status){
+        case PGRES_EMPTY_QUERY:
+            {
+                std::cout << "Query inviata vuota\n";
+            }
+            break; 
+        case PGRES_COMMAND_OK:
+            {
+                std::cout << "Comando andato a buon fine\n";
+            }
+            break;
+        case PGRES_TUPLES_OK:
+            {
+                std::cout << "Risultato tuple consistenti\n";
+            }
+            break;
+        case PGRES_COPY_OUT:
+            {
+                std::cout << "PGRES_COPY_OUT\n";
+            }
+            break;
+        case PGRES_COPY_IN:
+            {
+                std::cout << "PGRES_COPY_IN\n";
+            }
+            break;
+        case PGRES_BAD_RESPONSE:
+            {
+                std::cout << "PGRES_BAD_RESPONSE\n";
+                abort(conn , res);
+                exit(1);
+            }
+            break;
+        case PGRES_NONFATAL_ERROR:
+            {
+                std::cout << "PGRES_NONFATAL_ERROR\n";
+                abort(conn , res);
+                exit(1);
+            }
+            break;
+        case PGRES_FATAL_ERROR:
+            {
+                std::cout << "PGRES_FATAL_ERROR\n";
+                abort(conn , res);
+                exit(1);
+            }
+            break;
     }
 
     return res;
