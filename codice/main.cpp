@@ -53,7 +53,7 @@ char menu(const char* connInfo){
     std::cout<<"2) Insert dati nelle tabelle 1 \n";
     std::cout<<"3) Mostra il numero di biglietti comptati da una persona mostrando nome cognome e cf ed evidenzia se puo fare o meno recensioni \n";
     std::cout<<"4) Tutti i cinema con incassi totali maggiori di 100$ \n";
-    std::cout<<"5) Trovare tutte le persone che si sono sedute sullo stesso posto \n";
+    std::cout<<"5) Trovare tutte le persone che si sono sedute sullo stesso posto (anche in sale diverse) \n";
     std::cout<<"6) Esegui query 4 \n";
     std::cout<<"7) Esegui query 5 \n";
     std::cout<<"8) Esegui query 6 \n";
