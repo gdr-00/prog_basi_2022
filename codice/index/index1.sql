@@ -1,0 +1,1 @@
+create index film_recensioni on recensione_film(nome_film, anno_uscita, valutazione);

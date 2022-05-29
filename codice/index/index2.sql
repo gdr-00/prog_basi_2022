@@ -1,0 +1,1 @@
+create index sala_recensioni on recensione_sala(numero_sala, nome_cinema, citta_cinema, valutazione);
