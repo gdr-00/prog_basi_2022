@@ -106,3 +106,9 @@ create table programmazione (
     foreign key(nome_film, anno_uscita) references film(nome_film,anno_uscita) on update cascade,
     foreign key(nome_cinema,citta_cinema, numero_sala) references sala(nome_cinema,citta_cinema,numero_sala)
 );
+
+DROP VIEW IF EXISTS p_a;
+ CREATE VIEW p_a AS
+	SELECT p.nome, p.cognome, p.cf, a.email
+	FROM persona AS p, account AS a
+	WHERE p.cf=a.cf;
