@@ -1,0 +1,1 @@
+PGconn* connect(const char* connInfo);

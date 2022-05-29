@@ -1,7 +1,7 @@
-select p.nome, p.cognome, p.cf
-    from persona as p, account as a
-    where a.email in (select email
-					from biglietto
-					group by posto, email
-					having count(biglietto_id)>1) and p.cf = a.cf
-    group by p.cf
+SELECT p.nome, p.cognome, p.cf
+    FROM persona AS p, account AS a
+    WHERE a.email in (SELECT email
+					FROM biglietto
+					GROUP BY posto, email
+					HAVING count(biglietto_id)>1) AND p.cf = a.cf
+    GROUP BY p.cf

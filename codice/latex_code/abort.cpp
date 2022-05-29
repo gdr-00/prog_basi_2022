@@ -1,0 +1,1 @@
+void abort(PGconn* conn = nullptr, PGresult* res = nullptr);

@@ -1,0 +1,1 @@
+PGresult* execute(PGconn* conn, const char* query);

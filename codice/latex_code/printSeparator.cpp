@@ -1,0 +1,1 @@
+void printSeparator(int campi, int* maxChar);

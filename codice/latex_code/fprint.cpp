@@ -1,0 +1,1 @@
+void fprint(PGresult *res, const string& nome_file, const string& path="");

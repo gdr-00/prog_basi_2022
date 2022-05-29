@@ -3,8 +3,6 @@
 #include <fstream>
 #include <string>
 #include <cstring>
-#include <vector>
-#include <Windows.h>
 
 PGconn* connect(const char* connInfo);
 void abort(PGconn* conn = nullptr, PGresult* res = nullptr);
@@ -51,8 +49,8 @@ char menu(const char* connInfo){
     std::cout<<"\n\t MENU \n";
     std::cout<<"1) Reset tabelle 1 \n";
     std::cout<<"2) Insert dati nelle tabelle 1 \n";
-    std::cout<<"3) Mostra il numero di biglietti comptati da una persona mostrando nome cognome e cf ed evidenzia se puo fare o meno recensioni \n";
-    std::cout<<"4) Tutti i cinema con incassi totali maggiori di 100$ \n";
+    std::cout<<"3) Mostra il numero di biglietti comprati da una persona mostrando nome cognome e cf ed evidenzia se puo' fare o meno recensioni \n";
+    std::cout<<"4) Mostrare tutti i cinema con incassi totali maggiori di 100$ \n";
     std::cout<<"5) Trovare tutte le persone che si sono sedute sullo stesso posto (anche in sale diverse) \n";
     std::cout<<"6) Esegui query 4 \n";
     std::cout<<"7) Esegui query 5 \n";
@@ -78,7 +76,6 @@ char menu(const char* connInfo){
         case '3':
             {
                 PGconn* conn = connect(connInfo);
-                std::cout << queryReader("", "query1");
                 PGresult* res = execute(conn,queryReader("", "query1").c_str());
                 printQuery(res);
                 abort(conn , res);
@@ -125,6 +122,7 @@ char menu(const char* connInfo){
             break;
         case 'q':
             std::cout << "quitting" << std::endl;
+            return scelta;
             break;
         default:
             std::cout << "Input Invalido" << std::endl;
@@ -159,7 +157,7 @@ PGresult* execute(PGconn* conn, const char* query) {
             break;
         case PGRES_TUPLES_OK:
             {
-                std::cout << "Risultato tuple consistenti\n";
+                std::cout << "Risultato delle tuple consistente\n";
             }
             break;
         case PGRES_COPY_OUT:
