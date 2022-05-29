@@ -40,11 +40,11 @@ create table sala (
 
 create table persona (
     CF              char(16) primary key,
-    nome            varchar(50),
-    cognome         varchar(50),
-    sesso           char(2),
-    data_nascita    date,
-    numero_telefono varchar(15)
+    nome            varchar(50) not null,
+    cognome         varchar(50) not null,
+    sesso           char(2) check(sesso = 'M' OR sesso = 'F' OR sesso = 'ND') not null,
+    data_nascita    date not null,
+    numero_telefono varchar(15) not null
 );
 
 create table account (

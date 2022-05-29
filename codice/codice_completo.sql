@@ -111,7 +111,9 @@ DROP VIEW IF EXISTS p_a;
  CREATE VIEW p_a AS
 	SELECT p.nome, p.cognome, p.cf, a.email
 	FROM persona AS p, account AS a
-	WHERE p.cf=a.cf;INSERT INTO persona (CF, nome, cognome, sesso, data_nascita, numero_telefono) VALUES
+	WHERE p.cf=a.cf;
+    
+INSERT INTO persona (CF, nome, cognome, sesso, data_nascita, numero_telefono) VALUES
 ('BRGGLI78B51M130S','Ludovica','Argurio','F','1974-03-21','+39 0341993996'),
 ('SLVGBL37D47H270I','Ornella','Sforza','F','1978-08-11','+39 3770587292'),
 ('ZMNPTZ82H21B629G','Lisa','Babbo','M','1986-08-09','388897923'),
