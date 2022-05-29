@@ -55,6 +55,8 @@ char menu(const char* connInfo){
     std::cout<<"6) Trovare le sole persone che non hanno scritto una recensione \n";
     std::cout<<"7) Trovare l'utente che ha acquistato più biglietti con il loro relativo numero \n";
     std::cout<<"8) Trovare tutti i cinema e le relative sale che riproducono il film \"Avengers: Endgame\" \n";
+    std::cout<<"9) Stampare sul file \"query3.csv\" il risultato della query 3 \n";
+
     char scelta;
     std::cin>>scelta;
 
@@ -118,6 +120,14 @@ char menu(const char* connInfo){
                 PGconn* conn = connect(connInfo);
                 PGresult* res = execute(conn,queryReader("", "query6").c_str());
                 printQuery(res);
+                abort(conn , res);
+            }
+            break;
+        case '9':
+            {
+                PGconn* conn = connect(connInfo);
+                PGresult* res = execute(conn,queryReader("", "query3").c_str());
+                fprint(res, "query3");
                 abort(conn , res);
             }
             break;
